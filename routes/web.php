@@ -30,6 +30,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('/chat', function () {
+        return Inertia::render('Chat/Window');
+    })->name('chat');
+
     // Chat routes
     // Note: For simplicity purposes, these routes are added here,
     // in real world application, these should be placed in api.php
