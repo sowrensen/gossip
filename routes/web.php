@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    // Chat routes
+    // Note: For simplicity purposes, these routes are added here,
+    // in real world application, these should be placed in api.php
+    Route::get('/chat/rooms', [ChatController::class, 'rooms']);
+    Route::get('/chat/rooms/{room}/messages', [ChatController::class, 'messages']);
+    Route::post('/chat/{room}', [ChatController::class, 'storeMessage']);
+});
