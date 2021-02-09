@@ -29,4 +29,12 @@ class EventServiceProvider extends ServiceProvider
     {
         //
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function shouldDiscoverEvents(): bool
+    {
+        return true;
+    }
 }
