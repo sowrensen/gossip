@@ -24,7 +24,7 @@ class MessageFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'message' => $this->faker->realText()
+            'text' => $this->faker->realText()
         ];
     }
 }

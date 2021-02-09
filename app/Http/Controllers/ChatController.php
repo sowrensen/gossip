@@ -28,7 +28,7 @@ class ChatController extends Controller
     {
         $message = $room->messages()->create([
             'user_id' => auth()->id(),
-            'message' => $request->message
+            'text' => $request->message
         ]);
 
         return response()->json($message, Response::HTTP_CREATED);
