@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2">
+  <div class="flex justify-between items-center">
     <div class="font-bold text-xl">
       {{ selected.title }}
     </div>
