@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->id();
             $table->foreignId('room_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->longText('message');
+            $table->longText('text');
             $table->timestamps();
         });
     }

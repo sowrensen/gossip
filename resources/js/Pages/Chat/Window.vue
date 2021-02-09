@@ -6,6 +6,7 @@
             v-if="currentRoom.id"
             :rooms="rooms"
             :current-room="currentRoom"
+            @roomChanged="setRoom($event)"
         >
         </room-selector>
       </h2>
@@ -13,7 +14,7 @@
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-          <message-box></message-box>
+          <message-box :messages="messages"></message-box>
           <input-box></input-box>
         </div>
       </div>
@@ -37,7 +38,8 @@ export default {
   data () {
     return {
       rooms: [],
-      currentRoom: {}
+      currentRoom: {},
+      messages: []
     }
   },
   mounted () {
@@ -46,14 +48,22 @@ export default {
   methods: {
     getRooms () {
       axios.get('/chat/rooms')
-          .then(response => {
-            this.rooms = response.data
-            this.setRoom(this.rooms[0])
-          })
-          .catch(error => console.error(error.message()))
+        .then(response => {
+          this.rooms = response.data
+          this.setRoom(this.rooms[0])
+        })
+        .catch(error => console.error(error.message()))
     },
     setRoom (room) {
       this.currentRoom = room
+      this.getMessages()
+    },
+    getMessages () {
+      axios.get(`/chat/rooms/${this.currentRoom.id}/messages`)
+        .then(response => {
+          this.messages = response.data
+        })
+        .catch(error => console.error(error.message()))
     }
   }
 }

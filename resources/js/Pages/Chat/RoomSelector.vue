@@ -5,14 +5,14 @@
     </div>
     <div>
       <select
-          v-model="selected"
-          @change="$emit('roomChanged', selected)"
-          class="float-right rounded"
+        v-model="selected"
+        @change="$emit('roomChanged', selected)"
+        class="float-right rounded"
       >
         <option
-            v-for="(room, index) in rooms"
-            :key="index"
-            :value="room"
+          v-for="(room, index) in rooms"
+          :key="index"
+          :value="room"
         >
           {{ room.title }}
         </option>
