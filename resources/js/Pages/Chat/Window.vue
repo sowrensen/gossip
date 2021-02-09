@@ -2,7 +2,12 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        <room-selector></room-selector>
+        <room-selector
+            v-if="currentRoom.id"
+            :rooms="rooms"
+            :current-room="currentRoom"
+        >
+        </room-selector>
       </h2>
     </template>
     <div class="py-12">
@@ -29,5 +34,27 @@ export default {
     RoomSelector,
     AppLayout,
   },
+  data () {
+    return {
+      rooms: [],
+      currentRoom: {}
+    }
+  },
+  mounted () {
+    this.getRooms()
+  },
+  methods: {
+    getRooms () {
+      axios.get('/chat/rooms')
+          .then(response => {
+            this.rooms = response.data
+            this.setRoom(this.rooms[0])
+          })
+          .catch(error => console.error(error.message()))
+    },
+    setRoom (room) {
+      this.currentRoom = room
+    }
+  }
 }
 </script>
