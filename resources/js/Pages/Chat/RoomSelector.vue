@@ -7,7 +7,7 @@
       <select
         v-model="selected"
         @change="$emit('roomChanged', selected)"
-        class="float-right rounded"
+        class="rounded"
       >
         <option
           v-for="(room, index) in rooms"
