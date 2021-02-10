@@ -6,6 +6,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use App\Events\NewMessageReceived;
 
 class ChatController extends Controller
 {
@@ -28,8 +29,11 @@ class ChatController extends Controller
     {
         $message = $room->messages()->create([
             'user_id' => auth()->id(),
-            'text' => $request->message
+            'text' => $request->text
         ]);
+
+        // Broadcast a new event to other participants
+        broadcast(new NewMessageReceived($message))->toOthers();
 
         return response()->json($message, Response::HTTP_CREATED);
     }
